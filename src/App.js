@@ -1,7 +1,9 @@
 //import liraries
 import React, { Component } from 'react';
+import {Provider } from 'react-redux'
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
+import store from './store/createStore'
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE = 21.04203584;
@@ -41,18 +43,20 @@ class App extends Component {
     }
     render() {
         return (
-            <View style={styles.container}>
-                <MapView
-                    provider={this.props.provider}
-                    style={styles.map}
-                    initialRegion={this.state.region}
-                >
-                <MapView.Marker
-                    coordinate={this.state.region}
-                    pinColor="green"
-                />
-                </MapView>
-            </View>
+            <Provider store={store} >
+                <View style={styles.container}>
+                    <MapView
+                        provider={this.props.provider}
+                        style={styles.map}
+                        initialRegion={this.state.region}
+                    >
+                    <MapView.Marker
+                        coordinate={this.state.region}
+                        pinColor="green"
+                    />
+                    </MapView>
+                </View>
+            </Provider>
         );
     }
 }
