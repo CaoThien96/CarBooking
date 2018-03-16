@@ -47188,6 +47188,10 @@ var _createStore = require(454                  ); // 454 = ./store/createStore
 
 var _createStore2 = babelHelpers.interopRequireDefault(_createStore);
 
+var _SearchBox = require(455                               ); // 455 = ./component/search_box/SearchBox
+
+var _SearchBox2 = babelHelpers.interopRequireDefault(_SearchBox);
+
 var _Dimensions$get = _reactNative.Dimensions.get('window'),
     width = _Dimensions$get.width,
     height = _Dimensions$get.height;
@@ -47240,18 +47244,19 @@ var App = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            alert(width);
             return _react2.default.createElement(
                 _reactRedux.Provider,
                 { store: _createStore2.default, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 46
+                        lineNumber: 50
                     }
                 },
                 _react2.default.createElement(
                     _reactNative.View,
                     { style: styles.container, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 47
+                            lineNumber: 51
                         }
                     },
                     _react2.default.createElement(
@@ -47262,7 +47267,7 @@ var App = function (_Component) {
                             initialRegion: this.state.region,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 48
+                                lineNumber: 52
                             }
                         },
                         _react2.default.createElement(_reactNativeMaps2.default.Marker, {
@@ -47270,10 +47275,16 @@ var App = function (_Component) {
                             pinColor: 'green',
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 53
+                                lineNumber: 57
                             }
                         })
-                    )
+                    ),
+                    _react2.default.createElement(_SearchBox2.default, {
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 63
+                        }
+                    })
                 )
             );
         }
@@ -47288,8 +47299,6 @@ App.propTypes = {
 var styles = _reactNative.StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#2c3e50'
     },
     map: babelHelpers.extends({}, _reactNative.StyleSheet.absoluteFillObject)
@@ -50930,18 +50939,151 @@ __d(/* CarBooking/src/store/createStore.js */function(global, require, module, e
 
 var _redux = require(418    ); // 418 = redux
 
+var _reactNative = require(42            ); // 42 = react-native
+
+var _Dimensions$get = _reactNative.Dimensions.get('window'),
+    width = _Dimensions$get.width,
+    height = _Dimensions$get.height;
+
+var ASPECT_RATIO = width / height;
+var LATITUDE = 21.04203584;
+var LONGITUDE = 105.79428884;
+var LATITUDE_DELTA = 0.0922;
+var LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 var defaultState = {
-    value: 0
+    region: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
+    }
 };
 var reducer = function reducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
     var action = arguments[1];
 
-    if (action.type === "") {}
+    if (action.type === "GetCurrentGPS") {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var currentRegion = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA
+            };
+            return { region: currentRegion };
+        }, function (error) {
+            return console.log(error);
+        }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
+    }
     return state;
 };
 exports.default = store = (0, _redux.createStore)(reducer);
 }, 454, null, "CarBooking/src/store/createStore.js");
+__d(/* CarBooking/src/component/search_box/SearchBox.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var _jsxFileName = "/media/thien/Program/LTReactNative/Project/CarBooking/src/component/search_box/SearchBox.js";
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(42            ); // 42 = react-native
+
+var _Dimensions$get = _reactNative.Dimensions.get("window"),
+    width = _Dimensions$get.width,
+    height = _Dimensions$get.height;
+
+var SearchBox = function (_Component) {
+	babelHelpers.inherits(SearchBox, _Component);
+
+	function SearchBox(props) {
+		babelHelpers.classCallCheck(this, SearchBox);
+
+		var _this = babelHelpers.possibleConstructorReturn(this, (SearchBox.__proto__ || Object.getPrototypeOf(SearchBox)).call(this, props));
+
+		_this.state = {};
+		return _this;
+	}
+
+	babelHelpers.createClass(SearchBox, [{
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement(
+				_reactNative.View,
+				{ style: styles.container, __source: {
+						fileName: _jsxFileName,
+						lineNumber: 15
+					}
+				},
+				_react2.default.createElement(
+					_reactNative.View,
+					{ style: styles.textInput, __source: {
+							fileName: _jsxFileName,
+							lineNumber: 17
+						}
+					},
+					_react2.default.createElement(_reactNative.Image, { style: styles.image, source: require(456                          ), __source: { // 456 = ../../../asset/location.png
+							fileName: _jsxFileName,
+							lineNumber: 18
+						}
+					}),
+					_react2.default.createElement(_reactNative.TextInput, { style: styles.input, placeholder: "Nhap diem di", __source: {
+							fileName: _jsxFileName,
+							lineNumber: 19
+						}
+					})
+				),
+				_react2.default.createElement(
+					_reactNative.View,
+					{ style: styles.textInput, __source: {
+							fileName: _jsxFileName,
+							lineNumber: 21
+						}
+					},
+					_react2.default.createElement(_reactNative.Image, { style: styles.image, source: require(456                          ), __source: { // 456 = ../../../asset/location.png
+							fileName: _jsxFileName,
+							lineNumber: 22
+						}
+					}),
+					_react2.default.createElement(_reactNative.TextInput, { style: styles.input, placeholder: "Nhap diem den", __source: {
+							fileName: _jsxFileName,
+							lineNumber: 23
+						}
+					})
+				)
+			);
+		}
+	}]);
+	return SearchBox;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+	container: {
+		height: 100,
+		width: width - 20,
+		backgroundColor: "#ffff",
+		marginTop: 30,
+		marginLeft: 10,
+		marginRight: 20,
+		borderRadius: 10
+	},
+	textInput: {
+		flexDirection: "row",
+		marginTop: 5
+	},
+	image: {
+		flex: 1
+	},
+	input: {
+		flex: 10
+	}
+});
+
+exports.default = SearchBox;
+}, 455, null, "CarBooking/src/component/search_box/SearchBox.js");
+__d(/* CarBooking/asset/location.png */function(global, require, module, exports) {module.exports = require(173                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/asset","width":24,"height":24,"scales":[1],"hash":"0677489ae8414dbb69cb26e730090734","name":"location","type":"png"}); // 173 = react-native/Libraries/Image/AssetRegistry
+}, 456, null, "CarBooking/asset/location.png");
 ;require(194);
 ;require(0);
 //# sourceMappingURL=index.android.map

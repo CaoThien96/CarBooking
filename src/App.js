@@ -10,6 +10,9 @@ const LATITUDE = 21.04203584;
 const LONGITUDE = 105.79428884;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+// Import components
+import SearchBox from './component/search_box/SearchBox'
+
 // create a component
 class App extends Component {
     constructor(props) {
@@ -42,20 +45,23 @@ class App extends Component {
           );
     }
     render() {
+        alert(width)
         return (
             <Provider store={store} >
-                <View style={styles.container}>
-                    <MapView
-                        provider={this.props.provider}
-                        style={styles.map}
-                        initialRegion={this.state.region}
-                    >
-                    <MapView.Marker
-                        coordinate={this.state.region}
-                        pinColor="green"
-                    />
-                    </MapView>
-                </View>
+            <View style={styles.container}>
+                <MapView
+                    provider={this.props.provider}
+                    style={styles.map}
+                    initialRegion={this.state.region}
+                >
+                <MapView.Marker
+                    coordinate={this.state.region}
+                    pinColor="green"
+                />
+
+                </MapView>
+                <SearchBox/>
+            </View>
             </Provider>
         );
     }
@@ -67,8 +73,6 @@ App.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#2c3e50',
     },
     map: {
