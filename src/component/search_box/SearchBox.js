@@ -1,14 +1,53 @@
 //import liraries
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Dimensions,TextInput,Image } from "react-native";
+import RNGooglePlacePicker from "react-native-google-place-picker";
+
 const { width, height } = Dimensions.get("window");
 // create a component
 class SearchBox extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            
+			locationGo:{
+				address:null
+			},
+			locationCome:{
+				address:null
+			}
 		};
+	}
+	locationGo() {
+		RNGooglePlacePicker.show((response) => {
+		  if (response.didCancel) {
+				console.log("User cancelled GooglePlacePicker");
+		  }
+		  else if (response.error) {
+				console.log("GooglePlacePicker Error: ", response.error);
+		  }
+		  else {
+				console.log(response);
+				this.setState({
+			  		locationGo: response
+				});
+		  }
+		});
+	}
+	locationCome(){
+		RNGooglePlacePicker.show((response) => {
+			if (response.didCancel) {
+				  console.log("User cancelled GooglePlacePicker");
+			}
+			else if (response.error) {
+				  console.log("GooglePlacePicker Error: ", response.error);
+			}
+			else {
+				  console.log(response);
+				  this.setState({
+					locationCome: response
+				  });
+			}
+		  });
 	}
 	render() {
 		return (
@@ -16,11 +55,11 @@ class SearchBox extends Component {
            
 				<View style={styles.textInput} >
 					<Image style={styles.image} source={require("../../../asset/location.png")}  />
-					<TextInput style={styles.input}  placeholder="Nhap diem di"/>
+					<Text onPress={this.locationGo.bind(this)} style={styles.input}>{this.state.locationGo.address}</Text>
 				</View>
 				<View style={styles.textInput}>
 					<Image style={styles.image} source={require("../../../asset/location.png")}  />
-					<TextInput style={styles.input} placeholder="Nhap diem den"/>
+					<Text onPress={this.locationCome.bind(this)} style={styles.input}>{this.state.locationCome.address}</Text>
 				</View>
             
 			</View>
@@ -35,14 +74,14 @@ const styles = StyleSheet.create({
 		height:100,
 		width:width-20,
 		backgroundColor:"#ffff",
-        marginTop:30,
-        marginLeft:10,
-        marginRight:20,
-        borderRadius:10
+		marginTop:30,
+		marginLeft:10,
+		marginRight:20,
+		borderRadius:10
 	},
 	textInput:{
-        flexDirection:"row",
-        marginTop:5
+		flexDirection:"row",
+		marginTop:5
 	},
 	image:{
 		flex:1

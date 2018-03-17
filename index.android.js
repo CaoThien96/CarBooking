@@ -12,4 +12,5 @@ import {
   View
 } from 'react-native';
 import App from './src/App'
+import SearchBox from  './src/component/search_box/SearchBox'
 AppRegistry.registerComponent('CarBooking', () => App);
